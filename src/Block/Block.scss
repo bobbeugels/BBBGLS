@@ -1,0 +1,115 @@
+.Block {
+  display: flex;
+  justify-content: center;
+  width: 49.3vw;
+  height: calc(100% - 5.3vh);
+  box-sizing: border-box;
+  margin-top: 5.3vh;
+  padding-top: 10vw;
+}
+
+.text-section {
+  width: 80%;
+  font-size: 2.3vh;
+  line-height: 4vh;
+
+  .text-section-title {
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  p {
+    margin: 30px 0;
+  }
+}
+
+.about-me {
+  background-color: #000047;
+  color: #FFD256;
+  width: 50vw;
+
+  *::selection {
+    background: rgba(255, 210, 86, .99); // #FFD256
+    color: #000047;
+  }
+  *::selection {
+    background: rgba(255, 210, 86, .99); // #FFD256
+    color: #000047;
+  }
+}
+
+.abilities {
+  background-color: #FFD256;
+  color: #000047;
+
+  *::selection {
+    background: rgba(0, 0, 71, .99); // #FFD256
+    color: #FFD256;
+  }
+  *::selection {
+    background: rgba(0, 0, 71, .99); // #FFD256
+    color: #FFD256;
+  }
+}
+
+.work {
+  background-color: #FF2B6E;
+  color: #FFFFD8;
+
+  *::selection {
+    background: rgba(255, 210, 86, .99); // #FFD256
+    color: #FF2B6E;
+  }
+  *::selection {
+    background: rgba(255, 210, 86, .99); // #FFD256
+    color: #FF2B6E;
+  }
+}
+
+.education {
+  background: #FFFFD8;
+  color: #FF2B6E;
+
+  *::selection {
+    background: rgba(255, 43, 110, .99); // #FFD256
+    color: #FFFFD8;
+  }
+  *::selection {
+    background: rgba(255, 43, 110, .99); // #FFD256
+    color: #FFFFD8;
+  }
+}
+
+.portrait {
+  .Block {
+    width: 100%;
+    height: auto;
+    padding: 40px 20px 10px 20px;
+    margin: 0;
+  }
+
+  .text-section {
+    width: auto;
+
+    p {
+      margin: 30px 0;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .Block {
+    width: 100%;
+    height: auto;
+    padding: 40px 20px 10px 20px;
+    margin: 0;
+  }
+
+  .text-section {
+    width: auto;
+
+    p {
+      margin: 30px 0;
+    }
+  }
+}
