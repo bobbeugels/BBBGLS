@@ -73,13 +73,7 @@
   }
 }
 
-.portrait {
-  .Navigation {
-    display: none;
-  }
-}
-
-@media (max-width: 1024px) {
+.mobile {
   .Navigation {
     display: none;
   }

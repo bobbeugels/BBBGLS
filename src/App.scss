@@ -6,7 +6,12 @@
   display: flex;
 }
 
-html, #root {
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+html {
   width: 100%;
   height: 100%;
   font-family: 'Karla', sans-serif;
@@ -39,43 +44,27 @@ body {
   font-style: italic;
 }
 
-.portrait {
-  .App {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-  }
 
-  html, #root {
-    height: auto;
-    font-size: 18px;
-    line-height: 30px;
-  }
-
-  body {
-    width: 100%;
-    height: auto;
-
-    &::-webkit-scrollbar {
-      width: auto;
-      height: auto;
-    }
-  }
+.device-wrapper {
+  height: 100%;
+  font-size: 2.3vh;
+  line-height: 3.8vh;
 }
 
-@media (max-width: 1024px) {
+.mobile {
+  width: 100vw;
+
+  &.device-wrapper {
+    height: 100%;
+    font-size: 18px;
+    line-height: 30px;
+  }
+
   .App {
     width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
-  }
-
-  html, #root {
-    height: auto;
-    font-size: 18px;
-    line-height: 30px;
   }
 
   body {

@@ -6,7 +6,7 @@ const AboutMe = () => (
   <React.Fragment>
     <p>
       My name is Bob Beugels. I am a <B>Front-End Developer</B> specialised in
-      <B> user interface development</B> with a bachelor’s degree in design.
+      <B> user interfaces</B> and a bachelor’s degree in design.
     </p>
     <p>
       My <B>passion is creation</B>. After building with Lego for several years
