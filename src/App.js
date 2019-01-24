@@ -2,6 +2,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
+import scroll from 'scroll';
+import ease from 'ease-component';
 import './App.scss';
 import Navigation from './Navigation';
 import Block from './Block';
@@ -19,11 +21,17 @@ class App extends PureComponent {
   };
 
   state = {
-    portraitViewport: false,
+    scrollPosition: 0,
+    maxScrollValue: 0,
+    maxScrollbarValue: 0,
+    viewPortWidth: 0,
+    portrait: false,
   };
 
   constructor(props) {
     super(props);
+    this.scrollarea = React.createRef();
+    this.scrollbar = React.createRef();
     this.aboutMe = React.createRef();
     this.abilities = React.createRef();
     this.work = React.createRef();
@@ -34,10 +42,10 @@ class App extends PureComponent {
   componentDidMount() {
     const { location } = this.props;
     this.scrollTo(location.pathname);
-    this.viewportOrientation();
-    window.addEventListener('scroll', debounce(this.snapToNearestSection, 50));
-    window.addEventListener('resize', this.snapToNearestSection);
-    window.addEventListener('resize', this.viewportOrientation);
+    this.updateWindowSizes();
+    window.addEventListener('resize', this.updateWindowSizes);
+    this.scrollarea.current.addEventListener('scroll', debounce(this.snapToNearestSection, 50));
+    this.scrollarea.current.addEventListener('scroll', this.calculateScrollbarPosition);
   }
 
   componentDidUpdate(prevProps) {
@@ -47,94 +55,132 @@ class App extends PureComponent {
     }
   }
 
-  viewportOrientation = () => {
-    const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    const h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    this.setState({ portraitViewport: h > w });
-  };
-
   snapToNearestSection = () => {
-    const { portraitViewport } = this.state;
-    if (!portraitViewport) {
-      const { history, location } = this.props;
-      const offset = {
-        work: this.work.current.offsetLeft,
-        abilities: this.abilities.current.offsetLeft,
-        education: this.education.current.offsetLeft,
-        contact: this.education.current.offsetLeft,
-      };
-      const posX = window.scrollX;
-      const blockHalfWidth = this.aboutMe.current.offsetWidth / 2;
+    const { history, location } = this.props;
+    const { viewPortWidth, portrait } = this.state;
+    const offset = {
+      work: this.work.current.offsetLeft,
+      abilities: this.abilities.current.offsetLeft,
+      education: this.education.current.offsetLeft,
+      contact: this.contact.current.offsetLeft,
+    };
+    const posX = this.scrollarea.current.scrollLeft;
+    const blockHalfWidth = this.aboutMe.current.offsetWidth / 2;
+    const offsetWidth = portrait ? 0.019 : 0.007;
 
-      if (posX >= offset.contact - blockHalfWidth && location.path !== '/contact') {
-        history.push('/contact');
-        window.scrollTo(offset.contact - 10, 0);
-      } else if (posX >= offset.work - blockHalfWidth && location.path !== '/work') {
-        history.push('/work');
-        window.scrollTo(offset.work - 10, 0);
-      } else if (posX >= offset.education - blockHalfWidth && location.path !== '/work') {
-        history.push('/education');
-        window.scrollTo(offset.work - 10, 0);
-      } else if (posX >= offset.abilities - blockHalfWidth && location.path !== '/abilities') {
-        history.push('/abilities');
-        window.scrollTo(offset.abilities - 10, 0);
-      } else if (posX < offset.abilities - blockHalfWidth && location.path !== '/') {
-        history.push('/');
-        window.scrollTo(0, 0);
+    if (posX >= offset.contact - blockHalfWidth && location.path !== '/contact') {
+      history.push('/contact');
+      if (portrait) {
+        this.setView(offset.contact - (viewPortWidth * offsetWidth), 0);
+      } else {
+        this.setView(offset.education - (viewPortWidth * offsetWidth), 0);
       }
+    } else if (posX >= offset.education - blockHalfWidth && location.path !== '/education') {
+      history.push('/education');
+      this.setView(offset.education - (viewPortWidth * offsetWidth), 0);
+    } else if (posX >= offset.work - blockHalfWidth && location.path !== '/work') {
+      history.push('/work');
+      this.setView(offset.work - (viewPortWidth * offsetWidth), 0);
+    } else if (posX >= offset.abilities - blockHalfWidth && location.path !== '/abilities') {
+      history.push('/abilities');
+      this.setView(offset.abilities - (viewPortWidth * offsetWidth), 0);
+    } else if (posX < offset.abilities - blockHalfWidth && location.path !== '/') {
+      history.push('/');
+      this.setView(0, 0);
     }
   };
 
   scrollTo = (location) => {
+    const { viewPortWidth, portrait } = this.state;
+    const offsetWidth = portrait ? 0.019 : 0.007;
     switch (location) {
       case '/abilities':
-        window.scrollTo(this.abilities.current.offsetLeft, 0);
+        this.setView(this.abilities.current.offsetLeft - (viewPortWidth * offsetWidth), 0);
         break;
       case '/work':
-        window.scrollTo(this.work.current.offsetLeft, 0);
+        this.setView(this.work.current.offsetLeft - (viewPortWidth * offsetWidth), 0);
         break;
       case '/education':
-        window.scrollTo(this.education.current.offsetLeft, 0);
+        this.setView(this.education.current.offsetLeft - (viewPortWidth * offsetWidth), 0);
         break;
       case '/contact':
-        window.scrollTo(this.education.current.offsetLeft, 0);
+        if (portrait) {
+          this.setView(this.contact.current.offsetLeft - (viewPortWidth * offsetWidth), 0);
+        } else {
+          this.setView(this.education.current.offsetLeft - (viewPortWidth * offsetWidth), 0);
+        }
         break;
       default:
-        window.scrollTo(0, 0);
+        this.setView(0, 0);
     }
   };
 
+  setView = (x, y) => {
+    scroll.left(this.scrollarea.current, x, { duration: 250, ease: ease.inOutSine });
+    scroll.top(this.scrollarea.current, y, { duration: 250, ease: ease.inOutSine });
+  };
+
+  calculateScrollbarPosition = () => {
+    const { maxScrollValue, maxScrollbarValue } = this.state;
+    const posX = this.scrollarea.current.scrollLeft;
+    const scrollPercentage = posX / maxScrollValue;
+    const scrollPosition = scrollPercentage * maxScrollbarValue;
+    this.setState({ scrollPosition });
+  };
+
+  updateWindowSizes = () => {
+    const viewPortWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    const maxScrollValue = this.scrollarea.current.scrollWidth - viewPortWidth;
+    const maxScrollbarValue = viewPortWidth - this.scrollbar.current.offsetWidth;
+    this.setState({
+      viewPortWidth,
+      maxScrollValue,
+      maxScrollbarValue,
+      portrait: viewPortHeight > viewPortWidth,
+    });
+  };
+
   render() {
-    const { portraitViewport } = this.state;
+    const { scrollPosition } = this.state;
 
     return (
-      <div className={`App ${portraitViewport ? 'portrait' : ''}`}>
-        <Navigation />
-        <Block name="about-me" reference={this.aboutMe}>
-          <Block.Text title="Hello">
-            <AboutMe />
-          </Block.Text>
-        </Block>
-        <Block name="abilities" reference={this.abilities}>
-          <Block.Text title="Abilities">
-            <Abilities />
-          </Block.Text>
-        </Block>
-        <Block name="work" reference={this.work}>
-          <Block.Text title="Work">
-            <Work />
-          </Block.Text>
-        </Block>
-        <Block name="education" reference={this.education}>
-          <Block.Text title="Education">
-            <Education />
-          </Block.Text>
-        </Block>
-        <Block name="contact" reference={this.contact}>
-          <Block.Text title="Contact">
-            <p>Form here</p>
-          </Block.Text>
-        </Block>
+      <div className="App">
+        <div
+          className="scrollbar"
+          ref={this.scrollbar}
+          style={{ left: scrollPosition }}
+        />
+        <div className="scrollarea-outer" ref={this.scrollarea}>
+          <div className="scrollarea-inner">
+            <Navigation />
+            <Block name="about-me" reference={this.aboutMe}>
+              <Block.Text title="Hello">
+                <AboutMe />
+              </Block.Text>
+            </Block>
+            <Block name="abilities" reference={this.abilities}>
+              <Block.Text title="Abilities">
+                <Abilities />
+              </Block.Text>
+            </Block>
+            <Block name="work" reference={this.work}>
+              <Block.Text title="Work">
+                <Work />
+              </Block.Text>
+            </Block>
+            <Block name="education" reference={this.education}>
+              <Block.Text title="Education">
+                <Education />
+              </Block.Text>
+            </Block>
+            <Block name="contact" reference={this.contact}>
+              <Block.Text title="Contact">
+                <p>Form here</p>
+              </Block.Text>
+            </Block>
+          </div>
+        </div>
       </div>
     );
   }

@@ -55,7 +55,7 @@
         }
       }
 
-      &:hover, &:hover + li, &.hover {
+      &:hover {
         -webkit-box-shadow: inset 0px -.26vh 0px 0px rgba(24,24,24,1);
         -moz-box-shadow: inset 0px -.26vh 0px 0px rgba(24,24,24,1);
         box-shadow: inset 0px -.26vh 0px 0px rgba(24,24,24,1);
@@ -63,18 +63,25 @@
       }
     }
   }
-
-  .scrollbar {
-    position: absolute;
-    top: 0;
-    width: 25vw;
-    height: .26vh;
-    background-color: #181818;
-  }
 }
 
 .mobile {
   .Navigation {
     display: none;
+  }
+}
+
+.landscape {
+  .Navigation {
+    ul {
+      li {
+        &:hover + li, &.hover {
+          -webkit-box-shadow: inset 0px -.26vh 0px 0px rgba(24,24,24,1);
+          -moz-box-shadow: inset 0px -.26vh 0px 0px rgba(24,24,24,1);
+          box-shadow: inset 0px -.26vh 0px 0px rgba(24,24,24,1);
+          transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+      }
+    }
   }
 }

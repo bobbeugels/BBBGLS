@@ -55,13 +55,17 @@
   color: #FFFFD8;
 
   *::selection {
-    background: rgba(255, 210, 86, .99); // #FFD256
+    background: rgba(255, 255, 216, .99); // #FFD256
     color: #FF2B6E;
   }
   *::selection {
-    background: rgba(255, 210, 86, .99); // #FFD256
+    background: rgba(255, 255, 216, .99); // #FFD256
     color: #FF2B6E;
   }
+}
+
+.contact {
+  width: 50vw;
 }
 
 .education {
@@ -75,6 +79,20 @@
   *::selection {
     background: rgba(255, 43, 110, .99); // #FFD256
     color: #FFFFD8;
+  }
+}
+
+.portrait {
+  .Block {
+    width: 96.2vw;
+  }
+
+  .about-me {
+    width: 98.6vw;
+  }
+
+  .contact {
+    width: 98.6vw;
   }
 }
 

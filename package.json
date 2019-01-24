@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://bobbeugels.github.io/BBBGLS/",
   "dependencies": {
+    "classnames": "^2.2.6",
+    "ease-component": "^1.0.0",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
@@ -17,7 +19,8 @@
     "react-device-detect": "^1.6.2",
     "react-dom": "^16.6.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.0.5"
+    "react-scripts": "2.0.5",
+    "scroll": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
