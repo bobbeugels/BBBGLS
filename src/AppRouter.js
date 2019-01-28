@@ -32,7 +32,7 @@ class AppRouter extends PureComponent {
         })}
       >
         <Router>
-          <Route path="/" component={App} />
+          <Route path="/BBBGLS/" component={App} />
         </Router>
       </div>
     );

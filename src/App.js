@@ -69,24 +69,24 @@ class App extends PureComponent {
     const blockHalfWidth = this.aboutMe.current.offsetWidth / 2;
     const offsetWidth = portrait ? 0.019 : 0.007;
 
-    if (posX >= offset.contact - blockHalfWidth && location.path !== '/contact') {
-      history.push('/contact');
+    if (posX >= offset.contact - blockHalfWidth && location.path !== '/BBBGLS/contact') {
+      history.push('/BBBGLS/contact');
       if (portrait) {
         this.setView(offset.contact - (viewPortWidth * offsetWidth), 0);
       } else {
         this.setView(offset.education - (viewPortWidth * offsetWidth), 0);
       }
-    } else if (posX >= offset.education - blockHalfWidth && location.path !== '/education') {
-      history.push('/education');
+    } else if (posX >= offset.education - blockHalfWidth && location.path !== '/BBBGLS/education') {
+      history.push('/BBBGLS/education');
       this.setView(offset.education - (viewPortWidth * offsetWidth), 0);
-    } else if (posX >= offset.work - blockHalfWidth && location.path !== '/work') {
-      history.push('/work');
+    } else if (posX >= offset.work - blockHalfWidth && location.path !== '/BBBGLS/work') {
+      history.push('/BBBGLS/work');
       this.setView(offset.work - (viewPortWidth * offsetWidth), 0);
-    } else if (posX >= offset.abilities - blockHalfWidth && location.path !== '/abilities') {
-      history.push('/abilities');
+    } else if (posX >= offset.abilities - blockHalfWidth && location.path !== '/BBBGLS/abilities') {
+      history.push('/BBBGLS/abilities');
       this.setView(offset.abilities - (viewPortWidth * offsetWidth), 0);
-    } else if (posX < offset.abilities - blockHalfWidth && location.path !== '/') {
-      history.push('/');
+    } else if (posX < offset.abilities - blockHalfWidth && location.path !== '/BBBGLS/') {
+      history.push('/BBBGLS/');
       this.setView(0, 0);
     }
   };
@@ -95,16 +95,16 @@ class App extends PureComponent {
     const { viewPortWidth, portrait } = this.state;
     const offsetWidth = portrait ? 0.019 : 0.007;
     switch (location) {
-      case '/abilities':
+      case '/BBBGLS/abilities':
         this.setView(this.abilities.current.offsetLeft - (viewPortWidth * offsetWidth), 0);
         break;
-      case '/work':
+      case '/BBBGLS/work':
         this.setView(this.work.current.offsetLeft - (viewPortWidth * offsetWidth), 0);
         break;
-      case '/education':
+      case '/BBBGLS/education':
         this.setView(this.education.current.offsetLeft - (viewPortWidth * offsetWidth), 0);
         break;
-      case '/contact':
+      case '/BBBGLS/contact':
         if (portrait) {
           this.setView(this.contact.current.offsetLeft - (viewPortWidth * offsetWidth), 0);
         } else {

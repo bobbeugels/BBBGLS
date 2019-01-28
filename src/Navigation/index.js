@@ -21,22 +21,22 @@ export default class Navigation extends PureComponent {
         </div>
         <ul>
           <li>
-            <Link to="/">About me</Link>
+            <Link to="/BBBGLS/">About me</Link>
           </li>
           <li>
-            <Link to="/abilities">Abilities</Link>
+            <Link to="/BBBGLS/abilities">Abilities</Link>
           </li>
           <li>
-            <Link to="/work">Work</Link>
+            <Link to="/BBBGLS/work">Work</Link>
           </li>
           <li className={hoveringOnLastItem ? 'hover' : ''}>
-            <Link to="/education">Education</Link>
+            <Link to="/BBBGLS/education">Education</Link>
           </li>
           <li
             onMouseEnter={() => this.hoverHandler(true)}
             onMouseLeave={() => this.hoverHandler(false)}
           >
-            <Link to="/contact">Contact</Link>
+            <Link to="/BBBGLS/contact">Contact</Link>
           </li>
         </ul>
       </div>
