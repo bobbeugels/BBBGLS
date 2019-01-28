@@ -12,6 +12,7 @@ import {
   AboutMe,
   Work,
   Education,
+  Contact,
 } from './Content';
 
 class App extends PureComponent {
@@ -176,7 +177,7 @@ class App extends PureComponent {
             </Block>
             <Block name="contact" reference={this.contact}>
               <Block.Text title="Contact">
-                <p>Form here</p>
+                <Contact />
               </Block.Text>
             </Block>
           </div>
