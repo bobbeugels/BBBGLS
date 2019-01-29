@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/BBBGLS/static/css/main.3924b69f.chunk.css"
   },
   {
-    "revision": "1f52b260ecaf461181c122ef3f4f65fc",
+    "revision": "686871ec59406de856deceb0c980a94a",
     "url": "/BBBGLS/index.html"
   }
 ];
